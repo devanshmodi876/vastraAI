@@ -5,20 +5,58 @@ from rest_framework import status
 
 from .models import TextilePrediction
 from .serializers import TextilePredictionSerializer
-
+from AI.inference.predictor import predict_image
 from .textile_data import TEXTILES
 
+from django.http import FileResponse
+from .pdf_generator import generate_prediction_pdf
+
+
+
 # Create your views here.
+
+
+class DownloadReportAPIView(APIView):
+
+    def get(self, request, pk):
+        prediction = TextilePrediction.objects.get(id=pk)
+
+        info = TEXTILES.get(prediction.predicted_class.lower(), {})
+
+        pdf = generate_prediction_pdf({
+            "prediction": prediction.predicted_class,
+            "confidence": prediction.confidence,
+            "state": info.get("state"),
+            "technique": info.get("technique"),
+            "fabric": info.get("fabric"),
+            "description": info.get("description"),
+            "fact": info.get("fact"),
+        })
+
+        return FileResponse(
+            pdf,
+            as_attachment=True,
+            filename="vastra_report.pdf",
+        )
+
 class PredictionAPIView(APIView):
+    def get(self, request):
+        predictions = TextilePrediction.objects.all().order_by('-created_at')
+        serializer = TextilePredictionSerializer(predictions, many=True)
+        return Response(serializer.data)
+
     def post(self, request):
         serializer = TextilePredictionSerializer(data=request.data)
 
         if serializer.is_valid():
             prediction = serializer.save()
-            print("Image saved successfully:", prediction.image.name)
 
             reasult = predict_image(prediction.image.path)
-            info = TEXTILES.get(reasult["prediction"], {})
+            info = TEXTILES.get(reasult["prediction"].lower(), {})
+            reasult = predict_image(prediction.image.path)
+
+            info = TEXTILES.get(reasult["prediction"].lower(), {})
+
 
             prediction.predicted_class = reasult["prediction"]
             prediction.confidence = reasult["confidence"]
@@ -34,9 +72,9 @@ class PredictionAPIView(APIView):
                     "description": info.get("description"),
                     "image_url": prediction.image.url,
                     "confidence": prediction.confidence,
+                    "fact": info.get("fact"),
                 },
                 status=status.HTTP_201_CREATED
             )
 
-        print("serializer errors:", serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -8,6 +8,7 @@ TEXTILES = {
             "Ajrakh is a traditional hand block-printed textile made using "
             "natural dyes and intricate geometric patterns."
         ),
+        "fact": "Ajrakh is known for its complex geometric patterns and natural dyeing techniques, often using indigo and madder."
     },
 
     "bandhani": {
@@ -19,6 +20,7 @@ TEXTILES = {
             "Bandhani is created by tying thousands of tiny knots before "
             "dyeing to produce beautiful dotted patterns."
         ),
+        "fact": "Bandhani is a traditional tie-dye technique that involves plucking the cloth with fingernails into many tiny bindings, resulting in intricate patterns."
     },
 
     "chikankari": {
@@ -30,6 +32,7 @@ TEXTILES = {
             "Chikankari is a delicate hand embroidery style famous for its "
             "floral and elegant white thread work."
         ),
+        "fact": "Chikankari is a traditional hand embroidery technique that involves creating intricate designs using white thread on lightweight fabrics."
     },
 
     "ikat": {
@@ -41,6 +44,7 @@ TEXTILES = {
             "Ikat is produced by dyeing yarns before weaving to create "
             "characteristic blurred patterns."
         ),
+        "fact": "Ikat is a dyeing technique where the yarns are tie-dyed before weaving, resulting in unique patterns with a characteristic blurred effect."
     },
 
     "lehariya": {
@@ -52,5 +56,6 @@ TEXTILES = {
             "Lehariya is a traditional Rajasthani tie-dye textile recognized "
             "by its colorful wave-like stripes."
         ),
+        "fact": "Lehariya is a traditional tie-dye technique from Rajasthan, characterized by its vibrant wave-like patterns created by rolling and tying the fabric before dyeing."
     },
 }

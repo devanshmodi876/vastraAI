@@ -1,0 +1,15 @@
+.india-map path {
+  fill: #e5e7eb;
+  stroke: #ffffff;
+  stroke-width: 1;
+  transition: all 0.3s ease;
+}
+
+.india-map path:hover {
+  fill: #60a5fa;
+  cursor: pointer;
+}
+
+.india-map .active {
+  fill: #7c3aed !important;
+}

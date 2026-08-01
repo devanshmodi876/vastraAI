@@ -10,9 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@svg-maps/india": "^2.0.0",
     "axios": "^1.18.1",
+    "framer-motion": "^12.43.0",
+    "lucide-react": "^1.27.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "react-hot-toast": "^2.6.0",
     "react-router-dom": "^7.18.1"
   },
   "devDependencies": {
@@ -25,6 +29,7 @@
     "babel-plugin-react-compiler": "^1.0.0",
     "oxlint": "^1.71.0",
     "tailwindcss": "^4.3.3",
-    "vite": "^8.1.1"
+    "vite": "^8.1.1",
+    "vite-plugin-svgr": "^5.2.0"
   }
 }
