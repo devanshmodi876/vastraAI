@@ -1,11 +1,10 @@
-from AI.inference.predictor import predict_image
+from ml.inference.predictor import predict_image
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
 from .models import TextilePrediction
 from .serializers import TextilePredictionSerializer
-from AI.inference.predictor import predict_image
 from .textile_data import TEXTILES
 
 from django.http import FileResponse
