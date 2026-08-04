@@ -28,6 +28,7 @@ Thumbs.db
 
 # PyTorch
 *.pth
+!backend/ml/models/textile_classifier.pth
 
 # Build
 build/
