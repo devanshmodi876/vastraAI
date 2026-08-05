@@ -38,8 +38,11 @@ def load_model():
     model.eval()
     return model
 
-MODEL = load_model()
+MODEL = None
 def predict_image(image_path):
+    global MODEL
+    if MODEL is None:
+        MODEL = load_model()
     image = Image.open(image_path).convert("RGB")
     image = transform(image).unsqueeze(0)
     with torch.no_grad():
