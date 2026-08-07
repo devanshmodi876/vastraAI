@@ -42,10 +42,8 @@ def load_model():
 MODEL = None
 
 def load_model():
-    print("STEP 1")
     model = models.efficientnet_b0(weights=None)
 
-    print("STEP 2")
     model.classifier[1] = nn.Linear(
         model.classifier[1].in_features,
         len(CLASSES)
