@@ -1,7 +1,10 @@
-import axios from 'axios';
+import axios from "axios";
+
+export const API_BASE =
+  "https://vastraai-production.up.railway.app";
 
 const api = axios.create({
-    baseURL: "http://127.0.0.1:8000/api/",
+  baseURL: `${API_BASE}/api/`,
 });
 
 export default api;

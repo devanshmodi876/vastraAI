@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Clock3, Sparkles, Search, MapPin } from "lucide-react";
-import api from "../services/api";
+import api, { API_BASE } from "../services/api";
 
 function History() {
   const [history, setHistory] = useState([]);
@@ -108,11 +108,11 @@ function History() {
             className="bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden cursor-pointer hover:border-indigo-500 transition"
           >
 
-            <img
-              src={`http://127.0.0.1:8000${item.image}`}
-              alt={item.predicted_class}
-              className="w-full h-28 object-cover"
-            />
+          <img
+            src={`${API_BASE}${item.image}`}
+            alt={item.predicted_class}
+            className="w-full h-28 object-cover"
+          />
 
             <div className="p-4">
 
