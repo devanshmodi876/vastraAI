@@ -1,3 +1,4 @@
+import gc
 import torch
 import torch.nn as nn
 
@@ -39,17 +40,32 @@ def load_model():
     return model
 
 MODEL = None
+
+def load_model():
+    print("STEP 1")
+    model = models.efficientnet_b0(weights=None)
+
+    print("STEP 2")
+    model.classifier[1] = nn.Linear(
+        model.classifier[1].in_features,
+        len(CLASSES)
+    )
+
+    print("STEP 3")
+    state = torch.load(MODEL_PATH, map_location="cpu")
+
+    print("STEP 4")
+    model.load_state_dict(state)
+
+    print("STEP 5")
+    model.eval()
+
+    return model
 def predict_image(image_path):
-    global MODEL
+    print("Predict started")
+
     if MODEL is None:
+        print("Loading model")
         MODEL = load_model()
-    image = Image.open(image_path).convert("RGB")
-    image = transform(image).unsqueeze(0)
-    with torch.no_grad():
-        output = MODEL(image)
-        probabilities = torch.softmax(output, dim=1)
-        confidence, prediction = torch.max(probabilities, 1)
-    return {
-        "prediction": CLASSES[prediction.item()],
-        "confidence": round(confidence.item() * 100, 2)
-    }
+
+    print("Opening image")
