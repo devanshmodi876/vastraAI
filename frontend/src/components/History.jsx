@@ -108,11 +108,11 @@ function History() {
             className="bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden cursor-pointer hover:border-indigo-500 transition"
           >
 
-          <img
-            src={`https://vastraai-production.up.railway.app${item.image}`}
-            alt={item.predicted_class}
-            className="w-full h-28 object-cover"
-          />
+            <img
+              src={item.image}
+              alt={item.predicted_class}
+              className="w-full h-28 object-cover"
+            />
 
             <div className="p-4">
 
