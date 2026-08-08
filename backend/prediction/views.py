@@ -50,27 +50,53 @@ class PredictionAPIView(APIView):
         if serializer.is_valid():
             prediction = serializer.save()
 
-            result = predict_image(prediction.image.path)
-            info = TEXTILES.get(result["prediction"].lower(), {})
+            try:
+                print("Predict started")
 
-            prediction.predicted_class = result["prediction"]
-            prediction.confidence = result["confidence"]
-            prediction.save()
+                result = predict_image(
+                    prediction.image.path
+                )
 
-            return Response(
-                {
-                    "id": prediction.id,
-                    "prediction": info.get("name", result["prediction"]),
-                    "state": info.get("state"),
-                    "technique": info.get("technique"),
-                    "fabric": info.get("fabric"),
-                    "description": info.get("description"),
-                    "image_url": prediction.image.url,
-                    "confidence": prediction.confidence,
-                    "fact": info.get("fact"),
-                },
-                status=status.HTTP_201_CREATED
-            )
+                print("Prediction result:", result)
+
+                info = TEXTILES.get(
+                    result["prediction"].lower(),
+                    {}
+                )
+
+                prediction.predicted_class = result["prediction"]
+                prediction.confidence = result["confidence"]
+                prediction.save()
+
+                return Response(
+                    {
+                        "id": prediction.id,
+                        "prediction": info.get(
+                            "name",
+                            result["prediction"]
+                        ),
+                        "state": info.get("state"),
+                        "technique": info.get("technique"),
+                        "fabric": info.get("fabric"),
+                        "description": info.get("description"),
+                        "image_url": prediction.image.url,
+                        "confidence": prediction.confidence,
+                        "fact": info.get("fact"),
+                    },
+                    status=status.HTTP_201_CREATED
+                )
+
+            except Exception as e:
+                import traceback
+
+                traceback.print_exc()
+
+                return Response(
+                    {
+                        "error": str(e)
+                    },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
 
         return Response(
             serializer.errors,
