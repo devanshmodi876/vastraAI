@@ -50,21 +50,17 @@ class PredictionAPIView(APIView):
         if serializer.is_valid():
             prediction = serializer.save()
 
-            reasult = predict_image(prediction.image.path)
-            info = TEXTILES.get(reasult["prediction"].lower(), {})
-            reasult = predict_image(prediction.image.path)
+            result = predict_image(prediction.image.path)
+            info = TEXTILES.get(result["prediction"].lower(), {})
 
-            info = TEXTILES.get(reasult["prediction"].lower(), {})
-
-
-            prediction.predicted_class = reasult["prediction"]
-            prediction.confidence = reasult["confidence"]
+            prediction.predicted_class = result["prediction"]
+            prediction.confidence = result["confidence"]
             prediction.save()
 
             return Response(
                 {
                     "id": prediction.id,
-                    "prediction": info.get("name", reasult["prediction"]),
+                    "prediction": info.get("name", result["prediction"]),
                     "state": info.get("state"),
                     "technique": info.get("technique"),
                     "fabric": info.get("fabric"),
@@ -76,4 +72,7 @@ class PredictionAPIView(APIView):
                 status=status.HTTP_201_CREATED
             )
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
