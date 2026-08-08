@@ -51,7 +51,13 @@ class PredictionAPIView(APIView):
             prediction = serializer.save()
 
             try:
-                print("=== PREDICTION 1: Starting prediction ===")
+                print("=== NEW CODE IS RUNNING ===", flush=True)
+                print("ABOUT TO CALL PREDICT_IMAGE", flush=True)
+
+                result = predict_image(prediction.image.path)
+
+                print("=== PREDICT_IMAGE RETURNED ===", flush=True)
+                print(result, flush=True)
 
                 result = predict_image(
                     prediction.image.path
