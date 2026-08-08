@@ -51,12 +51,13 @@ class PredictionAPIView(APIView):
             prediction = serializer.save()
 
             try:
-                print("Predict started")
+                print("=== PREDICTION 1: Starting prediction ===")
 
                 result = predict_image(
                     prediction.image.path
                 )
 
+                print("=== PREDICTION 2: Prediction completed ===")
                 print("Prediction result:", result)
 
                 info = TEXTILES.get(

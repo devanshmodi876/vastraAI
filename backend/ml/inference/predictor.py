@@ -34,14 +34,18 @@ MODEL = None
 
 
 def load_model():
-    print("Loading textile model...")
+    print("=== MODEL 1: Creating EfficientNet ===")
 
     model = models.efficientnet_b0(weights=None)
+
+    print("=== MODEL 2: Replacing classifier ===")
 
     model.classifier[1] = nn.Linear(
         model.classifier[1].in_features,
         len(CLASSES)
     )
+
+    print("=== MODEL 3: Loading weights ===")
 
     model.load_state_dict(
         torch.load(
@@ -51,30 +55,32 @@ def load_model():
         )
     )
 
-    model.eval()
+    print("=== MODEL 4: Loaded weights ===")
 
-    print("Textile model loaded successfully")
+    model.eval()
 
     return model
 
-
 def predict_image(image_path):
-
     global MODEL
 
-    print("Predict started")
+    print("=== PREDICT 1 ===")
     print("Image:", image_path)
 
     if MODEL is None:
+        print("=== PREDICT 2: Loading model ===")
         MODEL = load_model()
+        print("=== PREDICT 3: Model loaded ===")
 
-    print("Opening image...")
+    print("=== PREDICT 4: Opening image ===")
 
     image = Image.open(image_path).convert("RGB")
 
+    print("=== PREDICT 5: Transforming ===")
+
     image = transform(image).unsqueeze(0)
 
-    print("Running inference...")
+    print("=== PREDICT 6: Inference ===")
 
     with torch.inference_mode():
         output = MODEL(image)
@@ -82,18 +88,12 @@ def predict_image(image_path):
         probabilities = torch.softmax(output, dim=1)
 
         confidence, prediction = torch.max(
-            probabilities,
-            1
+            probabilities, 1
         )
 
-    result = {
+    print("=== PREDICT 7: Complete ===")
+
+    return {
         "prediction": CLASSES[prediction.item()],
-        "confidence": round(
-            confidence.item() * 100,
-            2
-        ),
+        "confidence": round(confidence.item() * 100, 2),
     }
-
-    print("Prediction result:", result)
-
-    return result
