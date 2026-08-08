@@ -61,39 +61,24 @@ def load_model():
 
     return model
 
-def predict_image(image_path):
+def predict_image(image_file):
     global MODEL
 
-    print("=== PREDICT 1 ===")
-    print("Image:", image_path)
-
     if MODEL is None:
-        print("=== PREDICT 2: Loading model ===")
         MODEL = load_model()
-        print("=== PREDICT 3: Model loaded ===")
 
-    print("=== PREDICT 4: Opening image ===")
-
-    image = Image.open(image_path).convert("RGB")
-
-    print("=== PREDICT 5: Transforming ===")
+    image = Image.open(image_file).convert("RGB")
 
     image = transform(image).unsqueeze(0)
 
-    print("=== PREDICT 6: Inference ===")
-
-    with torch.inference_mode():
+    with torch.no_grad():
         output = MODEL(image)
 
         probabilities = torch.softmax(output, dim=1)
 
-        confidence, prediction = torch.max(
-            probabilities, 1
-        )
-
-    print("=== PREDICT 7: Complete ===")
+        confidence, prediction = torch.max(probabilities, 1)
 
     return {
         "prediction": CLASSES[prediction.item()],
-        "confidence": round(confidence.item() * 100, 2),
+        "confidence": round(confidence.item() * 100, 2)
     }
