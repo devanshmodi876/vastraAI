@@ -140,11 +140,13 @@ STATICFILES_STORAGE = (
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "https://vastra-ai-nine.vercel.app",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:5173",
+#     "https://vastra-ai-nine.vercel.app",
+# ]
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://vastra-ai-nine.vercel.app",
-]
+# CSRF_TRUSTED_ORIGINS = [
+#     "https://vastra-ai-nine.vercel.app",
+# ]
+
+CORS_ALLOW_ALL_ORIGINS = True
