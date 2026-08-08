@@ -197,7 +197,7 @@ function ResultCard({ result, preview }) {
 
           {/* Download */}
           <a
-            href={`http://127.0.0.1:8000/api/report/${result.id}/`}
+            href={`https://vastraai-production.up.railway.app/api/report/${result.id}/`}
             target="_blank"
             rel="noreferrer"
             className="flex justify-center items-center gap-3 rounded-3xl bg-gradient-to-r from-emerald-600 to-green-600 py-5 text-xl font-semibold text-white shadow-lg transition hover:scale-[1.02] hover:shadow-xl"
