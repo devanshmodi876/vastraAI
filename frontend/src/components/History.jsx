@@ -109,7 +109,7 @@ function History() {
           >
 
           <img
-            src={`${API_BASE}${item.image}`}
+            src={`https://vastraai-production.up.railway.app${item.image}`}
             alt={item.predicted_class}
             className="w-full h-28 object-cover"
           />
